@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-10</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/velocity/2.0.6/velocity.min.js"></script>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <transition name='fade'>
+            <span v-bind:key='show'>{{showNum}}</span>
+        </transition>
+    </div>
+    <script>
+        var vm= new Vue({
+            el:'#app',
+            data:{show:'B'},
+            computed:{
+                showNum() {
+                    switch(this.show){
+                        case 'A':return 'i am A'
+                        case 'B':return 'i am B'
+                        case 'C':return 'i am C'
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

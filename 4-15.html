@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-15</title>
+    <script src="vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/velocity/2.0.6/velocity.min.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <input placeholder="请输入要查的内容" v-model='query'>
+        <transition-group name='item' tag='ul' @before-enter='beforeEnter'
+        @enter='enter' @leave='leave' v-bind:css='false'>
+     <li v-for='(item,index) in ComputedList' :key='item.msg' :data-index='index'>
+         {{item.msg}}
+     </li>
+    </transition-group>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data(){
+                return {
+                    query:'',
+                    items:[
+                        {msg:'甲'},{msg:'乙'},{msg:'丙'},{msg:'丁'},{msg:'戊'}
+                    ]
+                }
+            },
+            computed:{
+                ComputedList(){
+                    var vm=this.query
+                    var nameList=this.items
+                    return nameList.filter(function (item){
+                        return item.msg.toLowerCase().indexOf(vm.toLowerCase()) !== -1
+                    })
+                }
+            },
+            methods:{
+                beforeEnter (el){
+                    el.style.opacity=0
+                    el.style.height=0
+                },
+                enter (el,done){
+                    var delay=el.dataset.index *150
+                    setTimeout(function (){
+                        Velocity (el,{opacity:1,height:'1.6em'},{complete:done})
+                    },delay)
+                },
+                leave (el,done){
+                    var delay=el.dataset.index *150
+                    setTimeout(function (){
+                        Velocity(el,{opacity:0,height:0},{complete:done})
+                    },delay)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
